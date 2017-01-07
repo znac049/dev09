@@ -12,13 +12,9 @@
 #define EXTERN
 #include "output.h"
 
-#ifdef XENIX_AS
-# define HEXSTARTCHAR '/'
-#else
-# define HEXSTARTCHAR '$'
-#endif
+#define HEXSTARTCHAR '$'
 #define OUTBUFSIZE 2048
-#define opcodeleadin()		/* outtab() for fussy assemblers */
+/*#define opcodeleadin() */		/* outtab() for fussy assemblers */
 
 PRIVATE unsigned errcount;	/* # errors in compilation */
 				/* depends on zero init */
@@ -36,6 +32,11 @@ FORWARD void errsum1 P((void));
 FORWARD void outvaldigs P((uvalue_t num));
 #endif
 #endif
+
+PUBLIC void opcodeleadin()
+{
+  outtab();
+}
 
 PUBLIC void bugerror(message)
 char *message;

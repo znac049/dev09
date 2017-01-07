@@ -779,7 +779,7 @@ more:
 	semicolon();
 	break;
     case SEMICOLON:
-	outnstr("!BCC_EOS");
+	outnstr(";BCC_EOS");
 	nextsym();
 	return;
     case ASMSYM:

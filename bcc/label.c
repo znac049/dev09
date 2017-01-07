@@ -208,7 +208,7 @@ label_no label;
 			    *(cnameptr = condnames[labptr->labcond]);
 # else
 			if (labptr->labcond == RA)
-			    strncpy(labpatch, "BRA\t\t", 5);
+			    strncpy(labpatch, "\tBRA\t\t", 6);
 			else
 			    *labpatch = '\t';
 			goto over;
