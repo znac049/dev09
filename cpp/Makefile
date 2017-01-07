@@ -1,3 +1,5 @@
+BINDIR=/home/bob/bcc/bin
+
 CFLAGS=-Wall -Wstrict-prototypes
 
 all: bcc-cpp
@@ -26,3 +28,6 @@ token1.h: token1.tok
 token2.h: token2.tok
 	gperf -aptTc -k1,3 -N is_ckey -H hash2 token2.tok > tmp.h
 	mv tmp.h token2.h
+
+install: all
+	cp bcc-cpp $(BINDIR)/bcc-cpp

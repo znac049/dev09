@@ -3,13 +3,13 @@
 # $Id$
 #
 
-PREFIX=/usr
+PREFIX=/home/bob/bcc
 
 CFLAGS	=-O
 LDFLAGS	=-s
 BINDIR	=$(PREFIX)/bin
-LIBDIR	=$(PREFIX)/lib/bcc
-BCCDEFS	=-DLOCALPREFIX=$(PREFIX) -DBINDIR=$(BINDIR) -DDEFARCH=0
+LIBDIR	=$(PREFIX)/bin
+BCCDEFS	=-DLOCALPREFIX=$(PREFIX) -DBINDIR=$(BINDIR) -DDEFARCH=4 -DMC6809
 
 BCFLAGS=$(ANSI) $(CFLAGS) $(LDFLAGS)
 
@@ -18,7 +18,12 @@ OBJS = bcc-cc1.o codefrag.o dbnode.o declare.o express.o exptree.o floatop.o \
 	loadexp.o longop.o output.o preproc.o preserve.o scan.o softop.o \
 	state.o table.o type.o assign.o hashcmd.o debug.o dbprintf.o
 
-all:	bcc-cc1 bcc 
+.PHONY: all install
+
+all:	bcc-cc1 bcc
+
+%.o : %.c
+	$(CC) $(BCFLAGS) $(BCCDEFS) -c -o $@ $<
 
 install: all
 	install -d $(BINDIR)
@@ -28,15 +33,6 @@ install: all
 
 bcc: bcc.c
 	$(CC) $(BCFLAGS) $(BCCDEFS) bcc.c -o $@
-
-ncc: bcc.c
-	$(CC) $(BCFLAGS) -DLOCALPREFIX= -DDEFARCH=0 bcc.c -o $@
-
-bcc09: bcc.c
-	$(CC) $(BCFLAGS) -DMC6809 $(BCCDEFS) bcc.c -o $@
-
-ccc: bcc.c
-	$(CC) $(BCFLAGS) -DCCC $(BCCDEFS) bcc.c -o $@
 
 bcc-cc1: $(OBJS)
 	$(CC) $(BCCARCH) $(LDFLAGS) $(OBJS) -o bcc-cc1

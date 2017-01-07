@@ -11,7 +11,7 @@
 
 /* major switches */
 
-/* #define MC6809 */		/* generate 6809 code */
+#define MC6809		        /* generate 6809 code */
 #ifndef MC6809
 #define I80386			/* generate 80386 code */
 #endif

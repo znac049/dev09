@@ -1,34 +1,34 @@
 
-CFLAGS=-O
+CFLAGS=-O -DMC6809=1
 LDFLAGS=-s
-LIBDIR=/usr/bin
-BINDIR=/usr/bin
+LIBDIR=/home/bob/bcc/bin
+BINDIR=/home/bob/bcc/bin
 
 OBJS		=as.o assemble.o errors.o express.o \
 		 genbin.o genlist.o genobj.o gensym.o \
 		 keywords.o macro.o mops.o pops.o readsrc.o \
 		 scan.o table.o typeconv.o alloc.o
 
-all: as86 as86_encap
+all: as09 as09_encap
 
-as86: $(OBJS)
+as09: $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@
 
-as86_encap: as86_encap.sh
+as09_encap: as09_encap.sh
 	sed -e "s:%%LIBDIR%%:$(LIBDIR):" -e "s:%%BINDIR%%:$(BINDIR):" \
-		< as86_encap.sh > tmp
+		< as09_encap.sh > tmp
 	@mv -f tmp $@
 	chmod +x $@
-	
+
 install: all
 	install -d $(LIBDIR)
-	install -m 755 as86 $(LIBDIR)
+	install -m 755 as09 $(LIBDIR)
 	install -d $(BINDIR)
-	install -m 755 as86_encap $(BINDIR)/as86_encap
+	install -m 755 as09_encap $(BINDIR)/as09_encap
 	-@rm -f tmp
 
 clean realclean clobber:
-	rm -f *.o as86 as86_encap
+	rm -f *.o as09 as09_encap
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
